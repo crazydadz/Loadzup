@@ -2,7 +2,7 @@
 using System.Net.Mime;
 using NSubstitute;
 using NUnit.Framework;
-using Silphid.AsyncLoader;
+using Silphid.Loadzup;
 using UniRx;
 
 public class CachedRequesterTest

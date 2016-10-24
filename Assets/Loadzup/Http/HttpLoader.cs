@@ -1,7 +1,7 @@
 ﻿using System;
 using UniRx;
 
-namespace Silphid.AsyncLoader.Http
+namespace Silphid.Loadzup.Http
 {
     public class HttpLoader : ILoader
     {
@@ -20,6 +20,6 @@ namespace Silphid.AsyncLoader.Http
         public IObservable<T> Load<T>(Uri uri, Options options = null) =>
             _requester
                 .Request(uri)
-                .Select(x => _converter.Convert<T>(x.Text, x.Bytes, options.ContentType ?? x.ContentType));
+                .Select(x => _converter.Convert<T>(x.Text, x.Bytes, options?.ContentType ?? x.ContentType));
     }
 }

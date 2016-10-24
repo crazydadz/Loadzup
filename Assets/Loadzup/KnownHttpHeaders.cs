@@ -1,4 +1,4 @@
-﻿namespace Silphid.AsyncLoader
+﻿namespace Silphid.Loadzup
 {
     public class KnownHttpHeaders
     {

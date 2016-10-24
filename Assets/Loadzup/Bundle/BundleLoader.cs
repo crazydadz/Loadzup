@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Net.Mime;
 using UniRx;
 
-namespace Silphid.AsyncLoader.Bundle
+namespace Silphid.Loadzup.Bundle
 {
     public class BundleLoader : ILoader
     {

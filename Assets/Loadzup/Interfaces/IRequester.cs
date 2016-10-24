@@ -1,7 +1,7 @@
 ﻿using System;
 using UniRx;
 
-namespace Silphid.AsyncLoader
+namespace Silphid.Loadzup
 {
     public interface IRequester
     {

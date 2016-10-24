@@ -6,7 +6,7 @@ using UniRx;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Silphid.AsyncLoader.Resource
+namespace Silphid.Loadzup.Resource
 {
     public class ResourceLoader : ILoader
     {
@@ -24,14 +24,15 @@ namespace Silphid.AsyncLoader.Resource
 
         public IObservable<T> Load<T>(Uri uri, Options options)
         {
-            string path = GetPathAndContentType(uri, ref options.ContentType);
+            var contentType = options?.ContentType;
+            string path = GetPathAndContentType(uri, ref contentType);
 
             return Resources
                 .LoadAsync<Object>(path)
                 .AsObservable<Object>()
-                .Select(x => Convert<T>(x, options.ContentType))
-                .DoOnCompleted(() => Debug.Log($"#AsyncLoader# Asset '{path}' loaded from resources."))
-                .DoOnError(error => Debug.LogError($"#AsyncLoader# Failed to load asset '{path}' from resources: {error}"));
+                .Select(x => Convert<T>(x, contentType))
+                .DoOnCompleted(() => Debug.Log($"#Loadzup# Asset '{path}' loaded from resources."))
+                .DoOnError(error => Debug.LogError($"#Loadzup# Failed to load asset '{path}' from resources: {error}"));
         }
 
         private string GetPathAndContentType(Uri uri, ref ContentType contentType)
@@ -45,7 +46,7 @@ namespace Silphid.AsyncLoader.Resource
                 return path;
 
             // Remove extension, because Unity doesn't expect it when looking up resources
-            path = uri.AbsolutePath.Left(uri.AbsolutePath.LastIndexOf(".", StringComparison.Ordinal));
+            path = path.Left(path.LastIndexOf(".", StringComparison.Ordinal));
 
             if (contentType == null)
             {

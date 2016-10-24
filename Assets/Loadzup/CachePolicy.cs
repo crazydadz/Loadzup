@@ -1,7 +1,13 @@
-﻿namespace Silphid.AsyncLoader
+﻿namespace Silphid.Loadzup
 {
     public enum CachePolicy
     {
+        /// <summary>
+        /// Specifies that cache should not be checked and resource should always be retrieved from origin.  Failure to
+        /// retrieve resource from origin results in an error and no further step is performed.
+        /// </summary>
+        IgnoreCache,
+
         /// <summary>
         /// Specifies that cache should be checked for given resource first, and only if not found there should it be
         /// loaded from its original location.  This is the fastest approach, but does not allow updates on the server

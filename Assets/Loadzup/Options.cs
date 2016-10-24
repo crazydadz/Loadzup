@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Mime;
 
-namespace Silphid.AsyncLoader
+namespace Silphid.Loadzup
 {
     public class Options
     {

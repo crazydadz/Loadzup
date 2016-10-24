@@ -7,7 +7,7 @@ using Silphid.Extensions;
 using UniRx;
 using UnityEngine;
 
-namespace Silphid.AsyncLoader
+namespace Silphid.Loadzup
 {
     public class CachedRequester : IRequester
     {
@@ -22,22 +22,29 @@ namespace Silphid.AsyncLoader
         {
             var cachePolicy = options?.CachePolicy ?? CachePolicy.TryCacheThenOrigin;
             var cacheFile = GetCacheFile(uri);
+
             var headers = GetHeadersFromCache(cacheFile);
             if (headers != null)
             {
                 if (cachePolicy == CachePolicy.TryCacheThenOrigin)
                 {
-                    Debug.Log($"#AsyncLoader# Returning cached version of resource {uri} (policy: {cachePolicy})");
+                    Debug.Log($"#Loadzup# Returning cached version of resource {uri} (policy: {cachePolicy})");
                     return GetFromCache(cacheFile, headers);
+                }
+
+                if (cachePolicy == CachePolicy.IgnoreCache)
+                {
+                    Debug.Log($"#Loadzup# Resource exists in cache, but is being ignored and will be retrieved from {uri} (policy: {cachePolicy})");
+                    Request(uri, cacheFile);
                 }
 
                 if (cachePolicy == CachePolicy.TryOriginThenCache)
                 {
-                    Debug.Log($"#AsyncLoader# Resource exists in cache, but first trying to retrieve it from {uri} (policy: {cachePolicy})");
+                    Debug.Log($"#Loadzup# Resource exists in cache, but first trying to retrieve it from {uri} (policy: {cachePolicy})");
                     return Request(uri, cacheFile)
                         .Catch<Response, Exception>(ex =>
                         {
-                            Debug.Log($"#AsyncLoader# Failed to retrieve {uri}, falling back to cached version.");
+                            Debug.Log($"#Loadzup# Failed to retrieve {uri}, falling back to cached version.");
                             return GetFromCache(cacheFile, headers);
                         });
                 }
@@ -46,7 +53,7 @@ namespace Silphid.AsyncLoader
                     throw new NotImplementedException();
             }
 
-            Debug.Log($"#AsyncLoader# Resource not found in cache, trying to retrieve it from {uri} (policy: {cachePolicy})");
+            Debug.Log($"#Loadzup# Resource not found in cache, trying to retrieve it from {uri} (policy: {cachePolicy})");
             return Request(uri, cacheFile);
         }
 
@@ -105,7 +112,7 @@ namespace Silphid.AsyncLoader
 
         private string GetCacheDir()
         {
-            var path = Application.temporaryCachePath + Path.DirectorySeparatorChar + "Silphid.AsyncLoader.Cache";
+            var path = Application.temporaryCachePath + Path.DirectorySeparatorChar + "Silphid.Loadzup.Cache";
             Debug.Log($"Cache path: {path}");
             Directory.CreateDirectory(path);
             return path;

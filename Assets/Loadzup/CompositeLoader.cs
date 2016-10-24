@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Mime;
 using UniRx;
 
-namespace Silphid.AsyncLoader
+namespace Silphid.Loadzup
 {
     public class CompositeLoader : ILoader
     {

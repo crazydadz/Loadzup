@@ -2,7 +2,7 @@
 using System.Net.Mime;
 using Silphid.Extensions;
 
-namespace Silphid.AsyncLoader
+namespace Silphid.Loadzup
 {
     public class Response
     {

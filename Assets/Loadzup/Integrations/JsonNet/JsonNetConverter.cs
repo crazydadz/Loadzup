@@ -1,7 +1,7 @@
 ﻿using System.Net.Mime;
 using Newtonsoft.Json;
 
-namespace Silphid.AsyncLoader.JsonNet
+namespace Silphid.Loadzup.JsonNet
 {
     public class JsonNetConverter : IConverter
     {

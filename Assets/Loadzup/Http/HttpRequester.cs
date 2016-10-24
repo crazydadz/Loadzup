@@ -4,7 +4,7 @@ using System.Linq;
 using Silphid.Extensions;
 using UniRx;
 
-namespace Silphid.AsyncLoader.Http
+namespace Silphid.Loadzup.Http
 {
     public class HttpRequester : IRequester
     {
@@ -17,7 +17,7 @@ namespace Silphid.AsyncLoader.Http
 
         public IObservable<Response> Request(Uri uri, Options options = null) =>
             ObservableWWW
-                .GetWWW(uri.AbsoluteUri, options.RequestHeaders)
+                .GetWWW(uri.AbsoluteUri, options?.RequestHeaders)
                 .Select(www => new Response
                 {
                     Bytes = www.bytes,
@@ -25,7 +25,7 @@ namespace Silphid.AsyncLoader.Http
                     Headers = GetMeaningfulHeaders(www.responseHeaders)
                 });
 
-        public Dictionary<string, string> GetMeaningfulHeaders(IDictionary<string, string> allHeaders)
+        private Dictionary<string, string> GetMeaningfulHeaders(IDictionary<string, string> allHeaders)
         {
             return MeaningfulHeaders
                 .Select(x => new KeyValuePair<string, string>(x, allHeaders.GetOptionalValue(x)))

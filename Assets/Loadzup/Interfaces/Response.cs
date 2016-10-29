@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Mime;
 using Silphid.Extensions;
 
@@ -6,11 +7,20 @@ namespace Silphid.Loadzup
 {
     public class Response
     {
+        private readonly Func<byte[]> _bytesFunc;
+        private readonly Func<string> _textFunc;
         private ContentType _contentType;
 
-        public byte[] Bytes;
-        public string Text;
+        public byte[] Bytes => _bytesFunc();
+        public string Text => _textFunc();
         public Dictionary<string, string> Headers;
+
+        public Response(Func<byte[]> bytesFunc, Func<string> textFunc, Dictionary<string, string> headers)
+        {
+            _bytesFunc = bytesFunc;
+            _textFunc = textFunc;
+            Headers = headers;
+        }
 
         public ContentType ContentType
         {

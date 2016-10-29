@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Mime;
 using NSubstitute;
 using NUnit.Framework;
@@ -33,11 +34,7 @@ public class CachedRequesterTest
         requester
             .Request(uri)
             .Returns(Observable.Return(
-                new Response
-                {
-                    Bytes = bytes,
-                    Headers = { [KnownHttpHeaders.ContentType] = contentType.ToString() }
-                }));
+                new Response(() => bytes, () => null, new Dictionary<string, string> { [KnownHttpHeaders.ContentType] = contentType.ToString() })));
     }
 
     private void AssertResponse(Response response, byte[] bytes, ContentType contentType)

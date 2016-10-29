@@ -18,12 +18,7 @@ namespace Silphid.Loadzup.Http
         public IObservable<Response> Request(Uri uri, Options options = null) =>
             ObservableWWW
                 .GetWWW(uri.AbsoluteUri, options?.RequestHeaders)
-                .Select(www => new Response
-                {
-                    Bytes = www.bytes,
-                    Text = www.text,
-                    Headers = GetMeaningfulHeaders(www.responseHeaders)
-                });
+                .Select(www => new Response(() => www.bytes, () => www.text, GetMeaningfulHeaders(www.responseHeaders)));
 
         private Dictionary<string, string> GetMeaningfulHeaders(IDictionary<string, string> allHeaders)
         {

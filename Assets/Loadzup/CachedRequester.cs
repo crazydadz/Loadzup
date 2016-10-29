@@ -60,11 +60,7 @@ namespace Silphid.Loadzup
         private IObservable<Response> GetFromCache(string cacheFile, Dictionary<string, string> headers)
         {
             return Observable.Return(
-                new Response
-                {
-                    Bytes = GetBytesFromCache(cacheFile),
-                    Headers = headers
-                });
+                new Response(() => GetBytesFromCache(cacheFile), () => null, headers));
         }
 
         private IObservable<Response> Request(Uri uri, string cacheFile) =>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Mime;
 using Silphid.Extensions;
+using Silphid.Loadzup.Http;
 
 namespace Silphid.Loadzup
 {

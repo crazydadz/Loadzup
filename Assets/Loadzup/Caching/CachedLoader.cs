@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UniRx;
 
-namespace Silphid.Loadzup
+namespace Silphid.Loadzup.Caching
 {
     public class CachedLoader : ILoader
     {

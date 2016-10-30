@@ -4,6 +4,8 @@ using System.Net.Mime;
 using NSubstitute;
 using NUnit.Framework;
 using Silphid.Loadzup;
+using Silphid.Loadzup.Caching;
+using Silphid.Loadzup.Http;
 using UniRx;
 
 public class CachedRequesterTest

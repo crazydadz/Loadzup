@@ -25,7 +25,7 @@ namespace Silphid.Loadzup.Resource
         public IObservable<T> Load<T>(Uri uri, Options options)
         {
             var contentType = options?.ContentType;
-            string path = GetPathAndContentType(uri, ref contentType);
+            var path = GetPathAndContentType(uri, ref contentType);
 
             return Resources
                 .LoadAsync<Object>(path)
@@ -38,10 +38,12 @@ namespace Silphid.Loadzup.Resource
         private string GetPathAndContentType(Uri uri, ref ContentType contentType)
         {
             // Rebuild path while removing scheme component
-            var path = uri.Host.RemovePrefix("/") + uri.AbsolutePath;
+            var path = string.IsNullOrEmpty(uri.AbsolutePath.RemovePrefix("/"))
+                ? uri.Host.RemovePrefix("/")
+                : uri.Host.RemovePrefix("/") + uri.AbsolutePath;
 
             // Any extension detected?
-            string extension = Path.GetExtension(path);
+            var extension = Path.GetExtension(path);
             if (extension.IsNullOrWhiteSpace())
                 return path;
 
